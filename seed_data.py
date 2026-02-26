@@ -1,34 +1,44 @@
 from sentence_transformers import SentenceTransformer
 from supabase import create_client
+from dotenv import load_dotenv
 import os
 
-model = SentenceTransformer("all-MiniLM-L6-v2")
+# Загружаем .env (если используешь файл .env)
+load_dotenv()
 
-supabase = create_client(
-    os.getenv("SUPABASE_URL"),
-    os.getenv("SUPABASE_KEY")
-)
+SUPABASE_URL = os.getenv("SUPABASE_URL") or "https://ohpjeofoqlqccocqlpfy.supabase.co"
+SUPABASE_KEY = os.getenv("SUPABASE_KEY") or "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ocGplb2ZvcWxxY2NvY3FscGZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwNDk2NzIsImV4cCI6MjA4NzYyNTY3Mn0.HwN58EL-TzEgxvWVf3u8jc7rla15lgCEWn4iMyhFYJ4"
+
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+
 
 def seed_documents():
     docs = [
         {
             "content": "Автоматизация бизнес-процессов с помощью ИИ позволяет сократить ручной труд и снизить количество ошибок.",
-            "metadata": {"topic": "automation", "lang": "ru"}
+            "metadata": {"topic": "automation", "lang": "ru"},
         },
         {
             "content": "RAG-система комбинирует поиск по базе знаний и генерацию ответа моделью, чтобы давать более точные ответы.",
-            "metadata": {"topic": "rag", "lang": "ru"}
+            "metadata": {"topic": "rag", "lang": "ru"},
         },
     ]
 
     for doc in docs:
-        emb = model.encode(doc["content"]).tolist()  # это будет список из 384 чисел
-        supabase.table("documents").insert({
-            "content": doc["content"],
-            "metadata": doc["metadata"],
-            "embedding": emb
-        }).execute()
+        print(f"Embedding: {doc['content'][:40]}...")
+        emb = model.encode(doc["content"]).tolist()
+        res = supabase.table("documents").insert(
+            {
+                "content": doc["content"],
+                "metadata": doc["metadata"],
+                "embedding": emb,
+            }
+        ).execute()
+        print("Insert result:", res)
+
+    print("✅ Документы засеяны")
+
 
 if __name__ == "__main__":
     seed_documents()
-    print("✅ Документы засеяны")
