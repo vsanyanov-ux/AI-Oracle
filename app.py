@@ -1,18 +1,12 @@
-#import os
-#from dotenv import load_dotenv
-#from supabase import create_client, Client
-#from sentence_transformers import SentenceTransformer
-
-#load_dotenv()
-
-#SUPABASE_URL = os.getenv("SUPABASE_URL")
-#SUPABASE_KEY = os.getenv("SUPABASE_KEY")
-
+import os
+from dotenv import load_dotenv
 from supabase import create_client, Client
 from sentence_transformers import SentenceTransformer
 
-SUPABASE_URL = "https://ohpjeofoqlqccocqlpfy.supabase.co"
-SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ocGplb2ZvcWxxY2NvY3FscGZ5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MjA0OTY3MiwiZXhwIjoyMDg3NjI1NjcyfQ.kaFZwFrityd-MPbzIpcGlP2QZN7IyhCffpihZ3plYSg"
+load_dotenv()
+
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_ANON_KEY")
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_ANON_KEY)
 
