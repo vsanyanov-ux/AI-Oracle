@@ -1,4 +1,3 @@
-# llm.py
 import os
 from dotenv import load_dotenv
 from langchain_gigachat.chat_models import GigaChat
