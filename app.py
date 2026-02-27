@@ -52,15 +52,15 @@ def ask_oracle(query: str, top_n: int = 3) -> str:
     if not docs:
         return "Судя по базе знаний, я не нашёл ничего по этому запросу."
 
-    unique_docs = {}
+    seen_contents = set()
+    unique_contents = []
     for d in docs:
-        doc_id = d.get("id")
-        if doc_id not in unique_docs:
-            unique_docs[doc_id] = d
+        content = d.get("content", "")
+        if content and content not in seen_contents:
+            seen_contents.add(content)
+            unique_contents.append(content)
 
-    context = "\n\n---\n\n".join(
-        d.get("content", "") for d in unique_docs.values()
-    )
+    context = "\n\n---\n\n".join(unique_contents)
 
     return f"Судя по базе знаний, вот что нашёл:\n\n{context}"
 
