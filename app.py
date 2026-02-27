@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from supabase import create_client, Client
 from sentence_transformers import SentenceTransformer
-from langchain.chains import RetrievalQA
+from langchain_classic.chains import RetrievalQA
 from llm import llm
 
 chain = RetrievalQA.from_chain_type(
