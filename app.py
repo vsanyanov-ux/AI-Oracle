@@ -22,24 +22,28 @@ def embed(text: str) -> list[float]:
     return vec.tolist()
 
 def search(query: str, match_threshold: float = 0.5, match_count: int = 5):
-    query_embedding = embed(query)
+    query_embedding = embed_query(query)
 
-    res = supabase.rpc(
-        "match_docs",  # или "match_documents" — как у тебя в Supabase
-        {
-            "query_embedding": query_embedding,
-            "match_threshold": match_threshold,
-            "match_count": match_count,
-        },
-    ).execute()
-
-    if res.error:
-        print("Search error:", res.error)
+    # ВАЖНО: оборачиваем в try/except вместо res.error
+    try:
+        res = supabase.rpc(
+            "match_documents",  # или "match_docs" — как у тебя в Functions
+            {
+                "query_embedding": query_embedding,
+                "match_threshold": match_threshold,
+                "match_count": match_count,
+            },
+        ).execute()
+    except Exception as e:
+        print("Search RPC error:", e)
         return []
 
+    # В новой версии .data лежит прямо в res.data
     docs = res.data or []
+
     for d in docs:
         print("---")
         print("similarity:", d.get("similarity"))
         print("content:", d.get("content")[:200], "...")
     return docs
+
