@@ -3,7 +3,7 @@ from supabase import create_client
 from dotenv import load_dotenv
 import os
 
-# Загружаем .env (если используешь файл .env)
+# Загрузка .env (если используешь файл .env)
 load_dotenv()
 
 SUPABASE_URL = os.getenv("SUPABASE_URL") or "https://ohpjeofoqlqccocqlpfy.supabase.co"
@@ -11,6 +11,18 @@ SUPABASE_KEY = os.getenv("SUPABASE_KEY") or "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+
+def test_supabase():
+    try:
+        # простой запрос к существующей таблице
+        res = supabase.table("documents").select("id").limit(1).execute()
+        print("Supabase OK, got:", res.data)
+    except Exception as e:
+        print("Supabase ERROR:", e)
+
+if __name__ == "__main__":
+    test_supabase()
+
 
 
 def seed_documents():
