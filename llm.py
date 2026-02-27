@@ -1,15 +1,8 @@
-import os
-from dotenv import load_dotenv
-from langchain_gigachat.chat_models import GigaChat
-from gigachat import GigaChat as GigaChatClient
+from gigachat import GigaChat
+from langchain_gigachat.chat_models import GigaChat as LangGigaChat
 
-load_dotenv()
+client = GigaChat(credentials=os.getenv("GIGACHAT_CREDENTIALS"), scope=os.getenv("GIGACHAT_SCOPE"))
 
-client = GigaChatClient(
-    credentials=os.getenv("GIGACHAT_CREDENTIALS"),
-    scope=os.getenv("GIGACHAT_SCOPE"),
-    verify_ssl_certs=False  # Решение SSL-проблемы
-)
+llm = LangGigaChat(giga_chat=client)
 
-llm = GigaChat(giga_chat=client)
 
