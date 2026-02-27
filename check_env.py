@@ -9,11 +9,11 @@ print("Env path exists:", os.path.isfile(env_path), "->", env_path)
 loaded = load_dotenv(dotenv_path=env_path)
 print("load_dotenv result:", loaded)
 
-url = os.getenv("SUPABASE_URL")
-key = os.getenv("SUPABASE_ANON_KEY")
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY")
 
-print("URL:", repr(url))
-print("KEY prefix:", repr((key or "")[:40]))
-print("KEY length:", len(key) if key else None)
+print("URL:", repr(SUPABASE_URL))
+print("ANON KEY prefix:", repr((SUPABASE_ANON_KEY or "")[:40]))
+print("ANON KEY length:", len(SUPABASE_ANON_KEY) if SUPABASE_ANON_KEY else None)
 
 print("=== check_env.py finished ===")
