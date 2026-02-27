@@ -22,7 +22,7 @@ def embed(text: str) -> list[float]:
     return vec.tolist()
 
 def search(query: str, match_threshold: float = 0.5, match_count: int = 5):
-    query_embedding = embed_query(query)
+    query_embedding = embed(query)
 
     # ВАЖНО: оборачиваем в try/except вместо res.error
     try:
