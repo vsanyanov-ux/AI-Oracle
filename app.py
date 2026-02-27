@@ -76,11 +76,12 @@ if __name__ == "__main__":
     test_query = "Привет, расскажи о себе"
     response = llm.invoke(test_query)
     print(response)
-
-
- if __name__ == "__main__":
+    
+if __name__ == "__main__":
     resp = llm.invoke("Коротко представься одним предложением.")
     print(resp)
+
+ 
   
 
 
