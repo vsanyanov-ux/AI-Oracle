@@ -64,4 +64,10 @@ def ask_oracle(query: str, top_n: int = 3) -> str:
 
     return f"Судя по базе знаний, вот что нашёл:\n\n{context}"
 
+if __name__ == "__main__":
+    test_query = "Привет, расскажи о себе"
+    response = llm.invoke(test_query)
+    print(response)
+
+
 
