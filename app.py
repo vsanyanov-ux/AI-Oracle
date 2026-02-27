@@ -2,9 +2,8 @@ import os
 from dotenv import load_dotenv
 from supabase import create_client, Client
 from sentence_transformers import SentenceTransformer
-from llm import llm
-
 from langchain.chains import RetrievalQA
+from llm import llm
 
 chain = RetrievalQA.from_chain_type(
     llm=llm,
@@ -76,7 +75,7 @@ if __name__ == "__main__":
     test_query = "Привет, расскажи о себе"
     response = llm.invoke(test_query)
     print(response)
-    
+
 if __name__ == "__main__":
     resp = llm.invoke("Коротко представься одним предложением.")
     print(resp)
