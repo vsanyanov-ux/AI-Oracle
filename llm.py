@@ -1,3 +1,10 @@
+import os
+from dotenv import load_dotenv
 from gigachat import GigaChat
 
-giga = GigaChat(credentials="MDE5YjFiYmQtMzg0Mi03YzQyLWE5MDMtNDc0MWY5ODE0YjRmOmExOWY3NjI2LTE0YWQtNDMxNC04MzA5LTA1MmNhNWM5MjM1Zg==", scope="GIGACHAT_API_PERS")
+load_dotenv()  # Загружает .env автоматически
+
+credentials = os.getenv("GIGACHAT_CREDENTIALS")
+scope = os.getenv("GIGACHAT_SCOPE")
+
+giga = GigaChat(credentials=credentials, scope=scope)
