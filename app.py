@@ -22,7 +22,7 @@ def embed(text: str) -> list[float]:
     return vec.tolist()
 
 def search(query: str, match_threshold: float = 0.5, match_count: int = 5):
-    query_embedding = embed_query(query)
+    query_embedding = embed(query)
 
     res = supabase.rpc(
         "match_docs",  # или "match_documents" — как у тебя в Supabase
