@@ -4,6 +4,7 @@ from supabase import create_client, Client
 from sentence_transformers import SentenceTransformer
 from langchain_classic.chains import RetrievalQA
 from llm import llm
+from vectorstore import vectorstore
 
 chain = RetrievalQA.from_chain_type(
     llm=llm,
@@ -78,6 +79,10 @@ if __name__ == "__main__":
 
 if __name__ == "__main__":
     resp = llm.invoke("Коротко представься одним предложением.")
+    print(resp)
+
+if __name__ == "__main__":
+    resp = chain.invoke("Объясни, что такое RAG-система, кратко.")
     print(resp)
 
  
