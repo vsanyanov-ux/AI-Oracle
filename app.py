@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 from supabase import create_client, Client
 from sentence_transformers import SentenceTransformer
+from llm import llm
+
 
 load_dotenv()
 
