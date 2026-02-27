@@ -4,6 +4,12 @@ from supabase import create_client, Client
 from sentence_transformers import SentenceTransformer
 from llm import llm
 
+from langchain.chains import RetrievalQA
+
+chain = RetrievalQA.from_chain_type(
+    llm=llm,
+    retriever=vectorstore.as_retriever(),
+)
 
 load_dotenv()
 
