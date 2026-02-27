@@ -47,3 +47,12 @@ def search(query: str, match_threshold: float = 0.5, match_count: int = 5):
         print("content:", d.get("content")[:200], "...")
     return docs
 
+def ask_oracle(query: str, top_n: int = 3) -> str:
+    docs = search(query, match_count=top_n)
+    if not docs:
+        return "Судя по базе знаний, я не нашёл ничего по этому запросу."
+
+    context = "\n\n---\n\n".join(d.get("content", "") for d in docs)
+    return f"Судя по базе знаний, вот что нашёл:\n\n{context}"
+
+
