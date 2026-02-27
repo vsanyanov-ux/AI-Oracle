@@ -52,7 +52,16 @@ def ask_oracle(query: str, top_n: int = 3) -> str:
     if not docs:
         return "Судя по базе знаний, я не нашёл ничего по этому запросу."
 
-    context = "\n\n---\n\n".join(d.get("content", "") for d in docs)
+    unique_docs = {}
+    for d in docs:
+        doc_id = d.get("id")
+        if doc_id not in unique_docs:
+            unique_docs[doc_id] = d
+
+    context = "\n\n---\n\n".join(
+        d.get("content", "") for d in unique_docs.values()
+    )
+
     return f"Судя по базе знаний, вот что нашёл:\n\n{context}"
 
 
