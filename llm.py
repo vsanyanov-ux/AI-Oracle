@@ -1,3 +1,4 @@
+import os
 from gigachat import GigaChat
 from langchain_gigachat.chat_models import GigaChat as LangGigaChat
 
