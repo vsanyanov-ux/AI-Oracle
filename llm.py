@@ -1,11 +1,12 @@
+# llm.py
 import os
 from dotenv import load_dotenv
-from langchain_gigachat import GigaChatLLM, ChatGigaChat
-from gigachat import GigaChat
+from langchain_gigachat.chat_models import GigaChat  # Правильный импорт!
+from gigachat import GigaChat as GigaChatClient
 
 load_dotenv()
 
-giga = GigaChat(credentials=os.getenv("GIGACHAT_CREDENTIALS"), scope=os.getenv("GIGACHAT_SCOPE"))
+client = GigaChatClient(credentials=os.getenv("GIGACHAT_CREDENTIALS"), scope=os.getenv("GIGACHAT_SCOPE"), verify_ssl_certs=False)
 
-llm = ChatGigaChat(giga_chat=giga)  # Или GigaChatLLM(giga_chat=giga)
+llm = GigaChat(giga_chat=client)  # Chat модель для LangChain
 
