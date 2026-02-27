@@ -3,7 +3,7 @@ from supabase import create_client
 from dotenv import load_dotenv
 import os
 
-# Загружаем .env (если используешь файл .env)
+# Загрузка .env (если используешь файл .env)
 load_dotenv()
 
 SUPABASE_URL = os.getenv("SUPABASE_URL") or "https://ohpjeofoqlqccocqlpfy.supabase.co"
