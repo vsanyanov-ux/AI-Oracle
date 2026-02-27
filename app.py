@@ -27,7 +27,7 @@ def search(query: str, match_threshold: float = 0.5, match_count: int = 5):
     # ВАЖНО: оборачиваем в try/except вместо res.error
     try:
         res = supabase.rpc(
-            "match_documents",  # или "match_docs" — как у тебя в Functions
+            "match_docs",
             {
                 "query_embedding": query_embedding,
                 "match_threshold": match_threshold,
