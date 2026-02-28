@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from supabase import create_client, Client
 from sentence_transformers import SentenceTransformer
 from llm import llm
-import requests
+from duckduckgo_search import DDGS
 from langchain_core.prompts import PromptTemplate
 
 # Load environment variables first
@@ -51,31 +51,19 @@ def search(query: str, match_threshold: float = 0.5, match_count: int = 5):
         print("content:", d.get("content")[:200], "...")
     return docs
 
-def web_search_direct(query: str) -> str:
+def web_search_direct(query: str, max_results: int = 3) -> str:
     """Useful for answering questions about current events or general knowledge."""
-    api_key = os.getenv("SERPAPI_API_KEY")
-    if not api_key:
-        return "Web search is currently unavailable. Please add SERPAPI_API_KEY to your .env file."
-    
     try:
-        url = "https://serpapi.com/search"
-        params = {
-            "q": query,
-            "api_key": api_key,
-            "engine": "google"
-        }
-        res = requests.get(url, params=params)
-        res.raise_for_status()
-        data = res.json()
+        results = ""
+        with DDGS() as ddgs:
+            # text() returns an iterator of dicts like {'title': '...', 'body': '...', 'href': '...'}
+            for r in ddgs.text(query, max_results=max_results):
+                results += f"{r.get('body', '')}\n\n"
         
-        if "answer_box" in data and "answer" in data["answer_box"]:
-            return data["answer_box"]["answer"]
-        if "answer_box" in data and "snippet" in data["answer_box"]:
-            return data["answer_box"]["snippet"]
-        if "organic_results" in data and len(data["organic_results"]) > 0:
-            return data["organic_results"][0].get("snippet", "No snippet available.")
+        if not results.strip():
+            return "No direct answer found on the web."
             
-        return "No direct answer found on the web."
+        return results.strip()
     except Exception as e:
         return f"Error performing web search: {e}"
 
