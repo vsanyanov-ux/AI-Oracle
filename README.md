@@ -19,10 +19,11 @@ This application is an AI-powered assistant capable of retrieving internal knowl
    - `GIGACHAT_SCOPE`
 
 ## Usage
-Run the main script to test both knowledge base search and web search:
+Run the main script to start the interactive AI Oracle:
 ```bash
 python app.py
 ```
+You can type any question in the terminal. The bot will automatically decide whether to search the internal knowledge base or the live web, and then generate an answer. Type `выход` or `exit` to close the app.
 
 ## Tech Stack
 - **Language**: Python

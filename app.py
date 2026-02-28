@@ -122,19 +122,23 @@ def ask_oracle(query: str, top_n: int = 3) -> str:
         return llm.invoke(final_prompt.format(context=context, query=query)).content
 
 if __name__ == "__main__":
-    test_query = "Привет, расскажи о себе"
-    print(f"\n--- Testing Query: {test_query} ---")
-    response = ask_oracle(test_query)
-    print("Agent Response:\n", response)
-
-if __name__ == "__main__":
-    test_query_db = "Объясни, что такое RAG-система, кратко."
-    print(f"\n--- Testing DB Search via Agent: {test_query_db} ---")
-    response = ask_oracle(test_query_db)
-    print("Agent Response:\n", response)
-
-if __name__ == "__main__":
-    test_query_web = "Какая сейчас погода в Москве?"
-    print(f"\n--- Testing Web Search via Agent: {test_query_web} ---")
-    response = ask_oracle(test_query_web)
-    print("Agent Response:\n", response)
+    print("-" * 50)
+    print("Добро пожаловать к AI Оракулу!")
+    print("Задайте любой вопрос. Введите 'выход' для завершения.")
+    print("-" * 50)
+    
+    while True:
+        user_input = input("\nВаш вопрос: ")
+        if user_input.lower().strip() in ['выход', 'exit', 'quit']:
+            print("До свидания!")
+            break
+            
+        if not user_input.strip():
+            continue
+            
+        print("Оракул думает...")
+        try:
+            response = ask_oracle(user_input)
+            print(f"\nОТВЕТ:\n{response}")
+        except Exception as e:
+            print(f"\n[Ошибка]: {e}")
